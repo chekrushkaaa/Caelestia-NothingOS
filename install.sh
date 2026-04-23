@@ -18,7 +18,7 @@
 set -euo pipefail
 
 # ── Defaults ────────────────────────────────────────────────
-CITY="Moscow"
+CITY=""
 CREATOR="Chekrushka (https://github.com/chekrushkaaa)"
 SCALE="1.5"
 WIN_ENTRY=""
@@ -37,6 +37,13 @@ while [[ $# -gt 0 ]]; do
         *) echo "Unknown flag: $1"; shift ;;
     esac
 done
+
+# ── Interactive prompts if not passed via flags ──────────────
+if [ -z "$CITY" ]; then
+    echo ""
+    read -rp "Enter your city for weather widget [Moscow]: " CITY
+    CITY="${CITY:-Moscow}"
+fi
 
 STEP=0
 step() { STEP=$((STEP+1)); echo -e "\n\033[1;36m[$STEP]\033[0m $1"; }
